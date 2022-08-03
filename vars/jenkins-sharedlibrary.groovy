@@ -1,7 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-def call(String imageName, Map config=[:], Closure body={}) {
+def call(String dockerImage, Map config=[:], Closure body={}) {
   pipeline {
     agent any
 
@@ -17,7 +17,6 @@ def call(String imageName, Map config=[:], Closure body={}) {
       disableConcurrentBuilds()
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
       timeout(time: 60, unit: "MINUTES")
-      ansiColor("xterm")
     }
 
     stages {
