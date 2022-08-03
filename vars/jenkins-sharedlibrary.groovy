@@ -12,13 +12,6 @@ def call(Map config=[:], Closure body={}) {
         IMAGE_TAG="0.1.0"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
-
-    options {
-      disableConcurrentBuilds()
-      buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
-      timeout(time: 60, unit: "MINUTES")
-    }
-
     stages {
          stage('Logging into AWS ECR') {
             steps {
