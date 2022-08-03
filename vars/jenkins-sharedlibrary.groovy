@@ -5,7 +5,7 @@ pipeline {
         AWS_DEFAULT_REGION="ap-south-1"
         IMAGE_REPO_NAME="sample"
         IMAGE_TAG="0.1.0"
-        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+        REPOSITORY_URI = "647834768285.dkr.ecr.ap-south-1.amazonaws.com/sample"
     }
    
     stages {
@@ -13,7 +13,7 @@ pipeline {
          stage('Logging into AWS ECR') {
             steps {
                 script {
-                sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 647834768285.dkr.ecr.ap-south-1.amazonaws.com"
                 }
                  
             }
@@ -29,7 +29,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+          dockerImage = docker.build "sample:0.1.0"
         }
       }
     }
@@ -38,8 +38,8 @@ pipeline {
     stage('Pushing to ECR') {
      steps{  
          script {
-                sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
-                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+                sh "docker tag sample:0.1.0 647834768285.dkr.ecr.ap-south-1.amazonaws.com/sample:0.1.0"
+                sh "docker push 647834768285.dkr.ecr.ap-south-1.amazonaws.com/sample:0.1.0"
          }
         }
       }
