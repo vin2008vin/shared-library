@@ -21,7 +21,7 @@ pipeline {
         
         stage('Cloning Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/jenkins-pipeline.git']]])     
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/shared-library.git']]])     
             }
         }
   
