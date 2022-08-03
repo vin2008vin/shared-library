@@ -3,6 +3,7 @@ import com.mycompany.colinbut.Git*
 import jenkins.model.*
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
+import com.buildah.federated.buildcontainers.stages.*
 
 
 def call(Map args=[:]) {
