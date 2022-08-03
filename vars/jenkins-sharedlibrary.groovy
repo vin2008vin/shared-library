@@ -1,5 +1,7 @@
-import com.mycompany.colinbut.DockerEcr
-import com.mycompany.colinbut.Git
+import com.mycompany.colinbut.*
+import com.mycompany.colinbut.Git*
+import jenkins.model.*
+jenkins = Jenkins.instance
 
 def call(Map args=[:]) {
     node {
