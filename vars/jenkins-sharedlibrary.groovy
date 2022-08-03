@@ -9,7 +9,7 @@ import groovy.lang.GroovyShell
 package groovy.lang
 
 
-def call(Map args=[:]) {
+def call(body) {
     node {
         stage('Checkout') {
             new Git(this).checkout(args.repo)
