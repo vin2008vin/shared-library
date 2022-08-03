@@ -1,7 +1,9 @@
 import com.mycompany.colinbut.*
 import com.mycompany.colinbut.Git*
 import jenkins.model.*
-jenkins = Jenkins.instance
+import groovy.json.JsonSlurper
+import groovy.json.JsonBuilder
+
 
 def call(Map args=[:]) {
     node {
