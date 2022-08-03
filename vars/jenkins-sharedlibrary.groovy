@@ -1,7 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-def call(String repoUrl, Map config=[:], Closure body={}) {
+def call(Map config=[:], Closure body={}) {
   pipeline {
     agent any
 
@@ -31,8 +31,7 @@ def call(String repoUrl, Map config=[:], Closure body={}) {
         
         stage('Cloning Git') {
             steps {
-              git branch: 'master',
-               url: "${repoUrl}"
+              checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/jenkins-pipeline.git']]])
             }
         }
   
