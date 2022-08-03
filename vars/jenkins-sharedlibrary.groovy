@@ -11,10 +11,10 @@ def call(Map config=[:]) {
         def IMAGE_TAG = 0.1.0
         def REPOSITORY_URI = ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}
     }
-	
-	def call(Map config) {
-		sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-		}
+    
+    def call(Map config) {
+        sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+        }
     
         
     def call(Map config=[:]) {
@@ -23,16 +23,16 @@ def call(Map config=[:]) {
     }
   
     // Building Docker images
-	def call(Map config) {
-		sh "dockerImage = docker.build ${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-	}
+    def call(Map config) {
+        sh "dockerImage = docker.build ${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+    }
    
     // Uploading Docker images into AWS ECR
-	def call(Map config) {
-	            sh """
-				docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG
+    def call(Map config) {
+                sh """
+                docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG
                 docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}
-				"""
-			}
+                """
+            }
     }
 }
