@@ -1,7 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-def call(String dockerImage, Map config=[:], Closure body={}) {
+def call(String repoUrl, Map config=[:], Closure body={}) {
   pipeline {
     agent any
 
@@ -31,7 +31,8 @@ def call(String dockerImage, Map config=[:], Closure body={}) {
         
         stage('Cloning Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/shared-library.git']]])     
+              git branch: 'master',
+               url: "${repoUrl}"
             }
         }
   
