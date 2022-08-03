@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID=""
+        AWS_ACCOUNT_ID="647834768285"
         AWS_DEFAULT_REGION="ap-south-1"
         IMAGE_REPO_NAME="sample"
         IMAGE_TAG="0.1.0"
@@ -9,6 +9,7 @@ pipeline {
     }
    
     stages {
+        
          stage('Logging into AWS ECR') {
             steps {
                 script {
@@ -20,7 +21,7 @@ pipeline {
         
         stage('Cloning Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/shared-library.git']]])     
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/jenkins-pipeline.git']]])     
             }
         }
   
