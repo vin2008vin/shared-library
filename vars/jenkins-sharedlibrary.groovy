@@ -1,38 +1,46 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.mycompany.colinbut.DockerEcr
+import com.mycompany.colinbut.Git
 
-def call(Map config=[:]) {
-  pipeline {
-    agent any
-    environment {
-        def AWS_ACCOUNT_ID = 647834768285
-        def AWS_DEFAULT_REGION = ap-south-1
-        def IMAGE_REPO_NAME = sample
-        def IMAGE_TAG = 0.1.0
-        def REPOSITORY_URI = ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}
-    }
-    
-    def call(Map config) {
-        sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+def call(Map args=[:]) {
+    node {
+        stage('Checkout') {
+            new Git(this).checkout(args.repo)
         }
-    
-        
-    def call(Map config=[:]) {
-    checkout scm
-    sh "checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/jenkins-pipeline.git']]])"
     }
-  
-    // Building Docker images
-    def call(Map config) {
-        sh "dockerImage = docker.build ${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+    return this
+}
+
+def compile(Map args) {
+    node {
+        stage('Logging into AWS ECR') {
+            sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 647834768285.dkr.ecr.ap-south-1.amazonaws.com"
+        }
     }
-   
-    // Uploading Docker images into AWS ECR
-    def call(Map config) {
-                sh """
-                docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG
-                docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}
-                """
-            }
+    return this
+}
+
+def buildDockerImage(Map args) {
+    node {
+        def dockerEcr = new DockerEcr(this)
+        stage('Build Docker Image') {
+            docker.build sample:0.1.0
+        }
+    }
+    return this
+}
+
+def publishDockerImage(Map args) {
+    node {
+        stage('Publish Docker Image') {
+            sh "docker tag sample:0.1.0 647834768285.dkr.ecr.ap-south-1.amazonaws.com/sample:0.1.0"
+            sh "docker push 647834768285.dkr.ecr.ap-south-1.amazonaws.com/sample:0.1.0"
+        }
+    }
+    return this
+}
+
+def additionalPostBuildSteps(Closure body= { }) {
+    node {
+        body()
     }
 }
