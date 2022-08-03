@@ -1,10 +1,4 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import jenkins.model.*;
-import groovy.transform.Field;
-
-def call() {
-  pipeline {
+pipeline {
     agent any
 
     environment {
@@ -50,4 +44,3 @@ def call() {
       }
     }
   }
-}
