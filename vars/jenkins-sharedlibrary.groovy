@@ -4,6 +4,8 @@ import jenkins.model.*
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 import com.buildah.federated.buildcontainers.stages.*
+import groovy.lang.Binding
+import groovy.lang.GroovyShell
 package groovy.lang
 
 
