@@ -1,13 +1,13 @@
 pipeline {
     agent any
-
     environment {
-        AWS_ACCOUNT_ID="647834768285"
+        AWS_ACCOUNT_ID=""
         AWS_DEFAULT_REGION="ap-south-1"
         IMAGE_REPO_NAME="sample"
         IMAGE_TAG="0.1.0"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
+   
     stages {
          stage('Logging into AWS ECR') {
             steps {
@@ -20,7 +20,7 @@ pipeline {
         
         stage('Cloning Git') {
             steps {
-              checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/jenkins-pipeline.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'b726746f-abea-40cf-b1a6-318d9e212b80', url: 'https://github.com/vin2008vin/shared-library.git']]])     
             }
         }
   
@@ -43,4 +43,4 @@ pipeline {
         }
       }
     }
-  }
+}
