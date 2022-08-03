@@ -1,7 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-def call(Map config=[:], Closure body={}) {
+def call(Map config=[:], Closure body) {
   pipeline {
     agent any
 
@@ -45,17 +45,6 @@ def call(Map config=[:], Closure body={}) {
                 sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
          }
         }
-      }
-    }
-    // TODO: maybe only email out when we are building master or at least not PRs
-    post {
-      failure {
-        emailext(
-          attachLog: true,
-          recipientProviders: [developers()],
-          body: "Build failed (see ${env.BUILD_URL})",
-          subject: "[JENKINS] ${env.JOB_NAME} failed",
-        )
       }
     }
   }
