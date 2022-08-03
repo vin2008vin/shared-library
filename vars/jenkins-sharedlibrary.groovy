@@ -3,7 +3,7 @@ import java.util.Date;
 import jenkins.model.*;
 import groovy.transform.Field;
 
-def call(Map config=[:], Closure body) {
+def call() {
   pipeline {
     agent any
 
