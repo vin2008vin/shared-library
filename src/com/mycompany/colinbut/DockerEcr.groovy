@@ -4,7 +4,7 @@ class DockerEcr implements Serializable {
 
     private final def script
 
-    static final String awsRegion = "eu-west-2"
+    static final String awsRegion = "ap-south-1"
     static final String dockerUser = "AWS"
     static final String dockerRegistryIdentifier = "066203203749.dkr.ecr.eu-west-2.amazonaws.com"
     static final String dockerRegistryUrl = "https://${dockerRegistryIdentifier}"
