@@ -1,6 +1,5 @@
 import com.mycompany.colinbut.*
 import com.mycompany.colinbut.Git*
-import jenkins.model.*
 
 def call(body) {
     node {
